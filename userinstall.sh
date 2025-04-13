@@ -1,6 +1,6 @@
 #!/bin/sh
 /bin/mkdir -pv ${HOME}/.local/lib/deadbeef
-if [ -f ./gtk2/ddb_crystalizer.so ]; then
+if [ -f ./out/ddb_crystalizer.so ]; then
 	/usr/bin/install -v -c -m 644 ./out/ddb_crystalizer.so ${HOME}/.local/lib/deadbeef/
 else
 	/usr/bin/install -v -c -m 644 ./ddb_crystalizer.so ${HOME}/.local/lib/deadbeef/
