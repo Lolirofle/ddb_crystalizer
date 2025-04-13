@@ -1,3 +1,26 @@
+/* Based on the Audacious plugin of the same name:
+ * https://github.com/audacious-media-player/audacious-plugins/blob/master/src/crystalizer/crystalizer.cc
+ *
+ * Copyright (c) 2008 William Pitcock <nenolod@nenolod.net>
+ * Copyright (c) 2010-2012 John Lindgren <john.lindgren@tds.net>
+ * Copyright (c) 2025 E <1522957+Lolirofle@users.noreply.github.com>
+ *
+ * Permission to use, copy, modify, and/or distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice is present in all copies.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
@@ -46,28 +69,6 @@ void crystalizer_reset(ddb_dsp_context_t *ctx){
     }
 }
 
-/* Based on the Audacious plugin of the same name:
- * https://github.com/audacious-media-player/audacious-plugins/blob/master/src/crystalizer/crystalizer.cc
- * Due to the algorithm in this function being almost identical to the original, their copyright notice will be presented below:
- *
- * Copyright (c) 2008 William Pitcock <nenolod@nenolod.net>
- * Copyright (c) 2010-2012 John Lindgren <john.lindgren@tds.net>
- *
- * Permission to use, copy, modify, and/or distribute this software for any
- * purpose with or without fee is hereby granted, provided that the above
- * copyright notice and this permission notice is present in all copies.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
- * ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
 int crystalizer_process(ddb_dsp_context_t *ctx, float *samples, int nframes, int maxframes, ddb_waveformat_t *fmt, float *r){
     ddb_crystalizer_t *crystalizer = (ddb_crystalizer_t *)ctx;
 
@@ -79,6 +80,7 @@ int crystalizer_process(ddb_dsp_context_t *ctx, float *samples, int nframes, int
         }
     }
 
+     //This is the part where the algorithm is being almost identical to the original, so their copyright notice is also presented above:
     for(int i=0; i<nframes; i++){
         for(int c=0; c < crystalizer->channels; c++){
             float current = *samples;
