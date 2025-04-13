@@ -34,6 +34,7 @@ void crystalizer_close(ddb_dsp_context_t *ctx){
     ddb_crystalizer_t *crystalizer = (ddb_crystalizer_t *)ctx;
     if(crystalizer->prev_samples){
         free(crystalizer->prev_samples);
+        crystalizer->prev_samples = NULL;
     }
     free(crystalizer);
 }
@@ -71,12 +72,15 @@ int crystalizer_process(ddb_dsp_context_t *ctx, float *samples, int nframes, int
     ddb_crystalizer_t *crystalizer = (ddb_crystalizer_t *)ctx;
 
     if(crystalizer->channels != fmt->channels){
-        crystalizer->channels = fmt->channels;
-        crystalizer->prev_samples = realloc(sizeof(float)*crystalizer->channels);
+        if(fmt->channels != 0 && (crystalizer->prev_samples = realloc(crystalizer->prev_samples,sizeof(float)*fmt->channels))){
+            crystalizer->channels = fmt->channels;
+        }else{
+            crystalizer->channels = 0;
+        }
     }
 
     for(int i=0; i<nframes; i++){
-        for(int c=0; c < fmt->channels; c++){
+        for(int c=0; c < crystalizer->channels; c++){
             float current = *samples;
             *samples++ = current + (current - crystalizer->prev_samples[c]) * crystalizer->intensity;
             crystalizer->prev_samples[c] = current;

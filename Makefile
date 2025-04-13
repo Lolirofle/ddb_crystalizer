@@ -1,8 +1,5 @@
 OUT?=ddb_crystalizer.so
 
-PKG_CFLAGS?=`pkg-config --cflags`
-PKG_LIBS?=`pkg-config --libs`
-
 CC?=gcc
 CFLAGS+=-Wall -g -fPIC -std=c99 -D_GNU_SOURCE
 LDFLAGS+=-shared
@@ -30,12 +27,12 @@ mkdir_out:
 
 $(OUT_DIR)/$(OUT): $(OBJS)
 	@echo "Linking"
-	@$(call link, $(OBJS), $(LIBS))
+	@$(call link, $(OBJS))
 	@echo "Done!"
 
 $(OUT_DIR)/%.o: %.c
 	@echo "Compiling $(subst $(OUT_DIR)/,,$@)"
-	@$(call compile, $(PKG_CFLAGS))
+	@$(call compile)
 
 clean:
 	@echo "Cleaning files from previous build..."
